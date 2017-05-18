@@ -1,0 +1,39 @@
+{
+  "id": "/kafka-mesos-scheduler",
+  "cmd": "$(find jdk* -maxdepth 0 -type d)/bin/java -jar kafka-mesos-0.10.1.0-SNAPSHOT-kafka_2.11-0.10.2.0.jar scheduler --debug true --master=zk://mesos-master1:2181,mesos-master2:2181,mesos-master3:2181/mesos --zk=zk1-for-kafka:2181,zk2-for-kafka:2181,zk3-for-kafka:2181/KafkaCluster --api=http://$HOSTNAME:7000 --storage=zk:/kafkaStorage --user=kafka",
+  "cpus": 1,
+  "mem": 4096,
+  "disk": 1024,
+  "instances": 1,
+  "constraints": [
+    [
+      "AppType",
+      "CLUSTER",
+      "kafkasched"
+    ]
+  ],
+  "healthChecks": [
+    {
+      "path": "/health",
+      "protocol": "HTTP",
+      "portIndex": 0,
+      "gracePeriodSeconds": 120,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 30,
+      "maxConsecutiveFailures": 3,
+      "ignoreHttp1xx": false
+    }
+  ],
+  "portDefinitions": [
+    {
+      "port": 31000,
+      "protocol": "tcp",
+      "labels": {}
+    }
+  ],
+  "uris": [
+    "https://<url-of-artifact-server>:443/kafka_2/kafka-mesos-0.10.1.0-SNAPSHOT-kafka_2.11-0.10.2.0.jar",
+    "https://<url-of-artifact-server>:443/kafka/kafka_2.11-0.10.2.0.tgz",
+    "https://<url-of-artifact-server>:443/java-store/jdk-8u45-linux-x64.tar.gz"
+  ]
+}

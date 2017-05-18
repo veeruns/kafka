@@ -144,6 +144,7 @@ Start the Kafka scheduler using this command:
     # ./kafka-mesos.sh scheduler
 
 Note: you can also use Marathon to launch the scheduler process so it gets restarted if it crashes.
+Note: You might not be able to run kafka-mesos scheduler in docker if mesos uses SSL. In order to make it work, run it as an plain marathon app. With the correct environmental variables set it would work. Marathon app json file can be found [[here][https://github.com/mesos/kafka/src/marathon/]
 
 Starting and using 1 broker
 ---------------------------
